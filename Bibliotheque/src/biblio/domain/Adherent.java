@@ -2,6 +2,8 @@ package biblio.domain;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ public class Adherent extends Utilisateur
 	private String telephone;
 	@Column
 	private String cat;
+	private Map<String,String> errors = new HashMap<>();
 	@Column
 	public static int nbMaxPrets = 3;
 	@Column
@@ -113,13 +116,23 @@ public class Adherent extends Utilisateur
 
 
 	public void validate() {
-		// TODO Auto-generated method stub
 		
+		if(this.getNom().isEmpty()) errors.put("nom", "  le champs nom ne doit pas être vide ");
+		if(this.getPrenom().isEmpty()) errors.put("prenom", "  le champs nom ne doit pas être vide ");
+		if(this.getpwd().isEmpty()) errors.put("pwd", "  le champs nom ne doit pas être vide ");
+		if(this.getpseudonyme().isEmpty()) errors.put("pseudo", "  le champs nom ne doit pas être vide ");
+		if(this.getDateNaissance().isEmpty()) errors.put("datenaiss", "  le champs nom ne doit pas être vide ");
+		boolean b=true;
+        try {
+            Float f = Float.parseFloat(this.getTelephone());           
+        } catch (NumberFormatException e) {
+        	if(b==false) errors.put("tel", "  Tous les champs doivent comporter uniquement des chiffres !!!");
+        }		
+				
 	}
-
-
-	public boolean isValid() {
-		// TODO Auto-generated method stub
+	
+	public boolean isValid() {		
+		if (errors==null || errors.size()==0) return true;
 		return false;
 	}
 

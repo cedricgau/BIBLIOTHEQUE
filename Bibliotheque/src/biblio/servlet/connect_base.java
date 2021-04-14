@@ -68,7 +68,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response) thro
 		ad.setpseudonyme(request.getParameter("pseudo"));
 		ad.setDateNaissance(request.getParameter("datenaiss"));
 		ad.setSexe(request.getParameter("sexe"));
-		ad.setCat(request.getParameter("catutil"));
+		ad.setCat("ADHERENT");
 		ad.setTelephone(request.getParameter("tel"));		
 				
 		ad.validate();
