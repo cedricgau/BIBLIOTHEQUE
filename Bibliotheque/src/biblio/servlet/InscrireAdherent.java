@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
+import biblio.dao.AdherentDao;
 import biblio.domain.Adherent;
 
 
@@ -29,14 +30,7 @@ public void init(ServletConfig config) throws ServletException {
 	driverName = config.getInitParameter("database-driver-class");
 	url = config.getInitParameter("database-url");
 
-	try {
-		Class.forName(driverName);
-		log("INFO  URL :" + url);
-		log("INFO  Chargement driver :" + driverName);
-	} catch (ClassNotFoundException e) {
-		// on loggue l'erreur dans les fichiers de tomcat
-		log("ERROR loading driver : " + e.getMessage());
-	}
+	
 };
 
 public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -58,6 +52,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response) thro
 			//usr+=" , votre identifiant ou mot de passe est faux";
 			Cookie cook = new Cookie("one",usr);
 			response.addCookie(cook);
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST , " pas de paramètres usr et pwd");
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 		}
 	}else if (request.getParameter("page").equalsIgnoreCase("formulaireInscription")) {
@@ -74,10 +69,15 @@ public void doGet(HttpServletRequest request, HttpServletResponse response) thro
 		ad.validate();
 		
 		if(ad.isValid()) {
-			request.getRequestDispatcher("/afficherEpargne.jsp").forward(request, response);
+			AdherentDao ado = new AdherentDao();
+			request.getRequestDispatcher("/confirmInscription.jsp").forward(request, response);
 		}else {
 			request.getRequestDispatcher("/formulaireInscription.jsp").forward(request, response);
 		}
+	}else {
+		Cookie cook = new Cookie("one","inconnu");
+		response.addCookie(cook);
+		request.getRequestDispatcher("/Login.jsp").forward(request, response);
 	}
 	
 }
