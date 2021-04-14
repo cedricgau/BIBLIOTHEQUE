@@ -18,10 +18,12 @@ import biblio.domain.Adherent;
 
 
 @SuppressWarnings("serial")
-@WebServlet(urlPatterns = "/gogogo", initParams={@WebInitParam(name="database-driver-class", value="oracle.jdbc.driver.OracleDriver"),@WebInitParam(name="database-url", value="jdbc:oracle:thin:@localhost:1521/xepdb1")} )
+@WebServlet(urlPatterns = {"/gogogo","/formulaireInscription"}, initParams={@WebInitParam(name="database-driver-class", value="oracle.jdbc.driver.OracleDriver"),@WebInitParam(name="database-url", value="jdbc:oracle:thin:@localhost:1521/xepdb1")} )
 public class InscrireAdherent extends HttpServlet {
 static String driverName;
 static String url;
+String usr="";
+String pwd="";
 
 public void init(ServletConfig config) throws ServletException {
 	//	récupération des paramètres de servlet et chargement du driver au start up
@@ -29,6 +31,7 @@ public void init(ServletConfig config) throws ServletException {
 	
 	driverName = config.getInitParameter("database-driver-class");
 	url = config.getInitParameter("database-url");
+	
 
 	
 };
@@ -40,11 +43,10 @@ public void doGet(HttpServletRequest request, HttpServletResponse response) thro
 		PrintWriter out = response.getWriter();
 		
 		//récupération des paramètres d'identification
-		String usr = request.getParameter("usr");
-		String pwd = request.getParameter("pwd");
+		usr = request.getParameter("usr");
+		pwd = request.getParameter("pwd");
 	
-		//HttpSession session = request.getSession(true);
-	
+			
 		if(usr.equals("biblio") && pwd.equals("biblio")) {
 			
 			request.getRequestDispatcher("/formulaireInscription.jsp").forward(request, response);
@@ -52,7 +54,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response) thro
 			//usr+=" , votre identifiant ou mot de passe est faux";
 			Cookie cook = new Cookie("one",usr);
 			response.addCookie(cook);
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST , " pas de paramètres usr et pwd");
+			//response.sendError(HttpServletResponse.SC_BAD_REQUEST , " pas de paramètres usr et pwd");
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 		}
 	}else if (request.getParameter("page").equalsIgnoreCase("formulaireInscription")) {
@@ -69,9 +71,12 @@ public void doGet(HttpServletRequest request, HttpServletResponse response) thro
 		ad.validate();
 		
 		if(ad.isValid()) {
-			AdherentDao ado = new AdherentDao();
+			AdherentDao ado = new AdherentDao(driverName,url,usr,pwd);
+			HttpSession session = request.getSession(true);
+			session.setAttribute("resultat", ado.insertAdherent());			
 			request.getRequestDispatcher("/confirmInscription.jsp").forward(request, response);
 		}else {
+			System.out.println("afficher les erreurs");
 			request.getRequestDispatcher("/formulaireInscription.jsp").forward(request, response);
 		}
 	}else {

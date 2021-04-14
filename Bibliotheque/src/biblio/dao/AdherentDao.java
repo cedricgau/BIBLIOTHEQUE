@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.servlet.http.HttpServletResponse;
-
 public class AdherentDao {
 	private String driverName="";
 	private String url="";
@@ -16,27 +14,30 @@ public class AdherentDao {
 	
 	public AdherentDao(String driver,String url, String usr, String pwd) {
 		setDriverName(driver);
+		setPwd(pwd);
+		setUrl(url);
+		setUsr(usr);
 	}
 	
 	
-	public void insertAdherent() {
+	public String insertAdherent() {
 	
 	try {
 		Class.forName(driverName);
 		
 	} catch (ClassNotFoundException e) {
 		// on loggue l'erreur dans les fichiers de tomcat
-		System.out.println("ERROR loading driver : " + e.getMessage());
+		return "ERROR loading driver : " + e.getMessage();
 	}
 	
 	Connection cnx = null;
 	Statement statement = null;
 	ResultSet rs = null;
-
+	
 		try { //ouverture de la connexion
 			cnx = DriverManager.getConnection( url, usr, pwd );
 		} catch (SQLException e) {
-			System.out.println(	"User:"+ usr + " Pwd:" + pwd + " " + e.getMessage());
+			return	"User:"+ usr + " Pwd:" + pwd + " " + e.getMessage();
 		}
 		try { //Création d'un énoncé et exécution
 			statement = cnx.createStatement();
@@ -46,15 +47,16 @@ public class AdherentDao {
 			result+="<ul>";
 			while (rs.next()) result += "<li>" + rs.getString(1) + "</li>";
 			result+="</ul></Body>";
-				session.setAttribute("req",result); // stockage du résultat de la requête dans la session			
-				
-				request.getRequestDispatcher("/confirlInscription.jsp").forward(request, response); // rappel de la page Login			
-
+			
 			rs.close();
 			cnx.close();
+			
+			return result;
+				
+			
 
 		} catch (SQLException e) {
-			System.out.println( e.getMessage());
+			return e.getMessage();
 		}
 		
 	

@@ -121,7 +121,7 @@ public class Adherent extends Utilisateur
 		if(this.getPrenom().isEmpty()) errors.put("prenom", "  le champs nom ne doit pas être vide ");
 		if(this.getpwd().isEmpty()) errors.put("pwd", "  le champs nom ne doit pas être vide ");
 		if(this.getpseudonyme().isEmpty()) errors.put("pseudo", "  le champs nom ne doit pas être vide ");
-		if(this.getDateNaissance().isEmpty()) errors.put("datenaiss", "  le champs nom ne doit pas être vide ");
+		if(this.getDateNaissance()==null) errors.put("datenaiss", "  le champs nom ne doit pas être vide ");
 		boolean b=true;
         try {
             Float f = Float.parseFloat(this.getTelephone());           
