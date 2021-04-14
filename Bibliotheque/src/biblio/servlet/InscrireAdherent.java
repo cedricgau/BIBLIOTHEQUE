@@ -18,7 +18,7 @@ import biblio.domain.Adherent;
 
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = "/gogogo", initParams={@WebInitParam(name="database-driver-class", value="oracle.jdbc.driver.OracleDriver"),@WebInitParam(name="database-url", value="jdbc:oracle:thin:@localhost:1521/xepdb1")} )
-public class connect_base extends HttpServlet {
+public class InscrireAdherent extends HttpServlet {
 static String driverName;
 static String url;
 
@@ -76,7 +76,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response) thro
 		if(ad.isValid()) {
 			request.getRequestDispatcher("/afficherEpargne.jsp").forward(request, response);
 		}else {
-			request.getRequestDispatcher("/formulaireEpargne.jsp").forward(request, response);
+			request.getRequestDispatcher("/formulaireInscription.jsp").forward(request, response);
 		}
 	}
 	
