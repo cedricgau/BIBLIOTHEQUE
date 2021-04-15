@@ -46,9 +46,12 @@ public class AdherentDao {
 		try { //Création d'un énoncé et exécution
 			statement = cnx.createStatement();
 			cnx.setAutoCommit(true);
+			String sexo="M";
+			if(adh.getSexe().equalsIgnoreCase("feminin")) sexo="F";
 			
-			//int nbLignesImpactees = statement.executeUpdate("INSERT INTO UTILISATEUR(IDUTILISATEUR,NOM, PRENOM,PWD,PSEUDONYME,DATENAISSANCE,SEXE,CATEGORIEUTILISATEUR) VALUES (seq_utilisateur,"+adh.getNom()+","+adh.getPrenom()+","+adh.getpwd()+","+adh.getpseudonyme()+","+adh.getDateNaissance()+","+adh.getSexe()+","+adh.getCat()+"')");
-			
+			int nbLignesImpactees = statement.executeUpdate("INSERT INTO UTILISATEUR(IDUTILISATEUR,NOM, PRENOM,PWD,PSEUDONYME,DATENAISSANCE,SEXE,CATEGORIEUTILISATEUR) VALUES (seq_utilisateur.nextval,'"+adh.getNom()+"','"+adh.getPrenom()+"','"+adh.getpwd()+"','"+adh.getpseudonyme()+"','"+adh.getDateNaissance()+"','"+sexo+"','"+adh.getCat()+"')");
+			int nbLignesImpactees2 = statement.executeUpdate("INSERT INTO ADHERENT(IDUTILISATEUR,TELEPHONE) VALUES (seq_utilisateur.currval,'"+adh.getTelephone()+"')");
+				
 			rs = statement.executeQuery("select utilisateur.IDUTILISATEUR,nom,prenom,pwd,pseudonyme,datenaissance,sexe,categorieutilisateur,telephone from adherent , utilisateur where utilisateur.idutilisateur= adherent.idutilisateur ");
 			String result = "<br><br><head></head><body><br><br><H3>Voici la liste des ADHERENTS</H3><br>";
 			result+="<ul>";
