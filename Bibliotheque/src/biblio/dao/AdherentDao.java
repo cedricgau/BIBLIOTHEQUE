@@ -47,13 +47,15 @@ public class AdherentDao {
 			statement = cnx.createStatement();
 			cnx.setAutoCommit(true);
 			
-			int nbLignesImpactees = statement.executeUpdate("INSERT INTO UTILISATEUR(IDUTILISATEUR,NOM, PRENOM,PWD,PSEUDONYME,DATENAISSANCE,SEXE,CATEGORIEUTILISATEUR) VALUES (seq_utilisateur,"+adh.getNom()+","+adh.getPrenom()+","+adh.getpwd()+","+adh.getpseudonyme()+","+adh.getDateNaissance()+","+adh.getSexe()+","+adh.getCat()+","+"')");
+			//int nbLignesImpactees = statement.executeUpdate("INSERT INTO UTILISATEUR(IDUTILISATEUR,NOM, PRENOM,PWD,PSEUDONYME,DATENAISSANCE,SEXE,CATEGORIEUTILISATEUR) VALUES (seq_utilisateur,"+adh.getNom()+","+adh.getPrenom()+","+adh.getpwd()+","+adh.getpseudonyme()+","+adh.getDateNaissance()+","+adh.getSexe()+","+adh.getCat()+"')");
 			
-			String result = "<br><br><head>JDBC & Driver Manager</head><body><br><br><H3>Liste des ADHERENTS</H3><br>";
+			rs = statement.executeQuery("select utilisateur.IDUTILISATEUR,nom,prenom,pwd,pseudonyme,datenaissance,sexe,categorieutilisateur,telephone from adherent , utilisateur where utilisateur.idutilisateur= adherent.idutilisateur ");
+			String result = "<br><br><head></head><body><br><br><H3>Voici la liste des ADHERENTS</H3><br>";
 			result+="<ul>";
-			while (rs.next()) result += "<li>" + rs.getString(1) + "</li>";
-			result+="</ul></Body>";
+			while (rs.next()) result += "<li>" + rs.getInt(1) +"  "+ rs.getString(2) +"  "+ rs.getString(3) +"  "+ rs.getString(4) +"  "+ rs.getString(5) +"  "+ rs.getString(6) +"  "+ rs.getString(7) +"  "+ rs.getString(8) +"  "+ rs.getString(9) +"</li>";
+			result+="</ul><p>Cher(e) "+ adh.getPrenom()+" "+adh.getNom()+ "</p></Body>";
 			
+					
 			rs.close();
 			cnx.close();
 			

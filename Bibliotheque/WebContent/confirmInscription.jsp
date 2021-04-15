@@ -7,7 +7,8 @@
 <title>Inscription réussi</title>
 </head>
 <body>
-<p>Votre demande d'inscription de ce nouvel adhérent a bien été pris en compte. Celui aura our numéro d'adhérent : <% %></p>
+${resultat}
+<p>Votre demande d'inscription de ce nouvel adhérent a bien été pris en compte. Celui aura our numéro d'adhérent : </p>
 <p><a href="formulaireInscription.jsp">Autre inscription</a>
 
 </body>
