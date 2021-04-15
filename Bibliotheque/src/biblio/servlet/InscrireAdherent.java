@@ -76,9 +76,9 @@ public void doGet(HttpServletRequest request, HttpServletResponse response) thro
 		
 		if(ad.isValid()) {
 			Adherent adh = new Adherent(200000, ad.getNom(), ad.getPrenom(), ad.getPwd(), ad.getPseudonyme(), ad.getDatenaiss(), ad.getSexe(), ad.getCat(), ad.getTel());
-			AdherentDao ado = new AdherentDao(driverName,url,usr,pwd);
+			AdherentDao dao = new AdherentDao(driverName,url,usr,pwd);
 
-			session.setAttribute("resultat", ado.insertAdherent());			
+			session.setAttribute("resultat", dao.insertAdherent(adh));			
 			request.getRequestDispatcher("/confirmInscription.jsp").forward(request, response);
 		}else {
 			

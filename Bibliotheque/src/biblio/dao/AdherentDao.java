@@ -24,7 +24,7 @@ public class AdherentDao {
 	}
 	
 	
-	public String insertAdherent() {
+	public String insertAdherent(Adherent adh) {
 	
 	try {
 		Class.forName(driverName);
@@ -47,7 +47,7 @@ public class AdherentDao {
 			statement = cnx.createStatement();
 			cnx.setAutoCommit(true);
 			
-			int nbLignesImpactees = statement.executeUpdate("INSERT INTO UTILISATEUR(IDUTILISATEUR,NOM, PRENOM,PWD,PSEUDONYME,DATENAISSANCE,SEXE,CATEGORIEUTILISATEUR) VALUES (seq_utilisateur"+"')");
+			int nbLignesImpactees = statement.executeUpdate("INSERT INTO UTILISATEUR(IDUTILISATEUR,NOM, PRENOM,PWD,PSEUDONYME,DATENAISSANCE,SEXE,CATEGORIEUTILISATEUR) VALUES (seq_utilisateur,"+adh.getNom()+","+"')");
 			
 			String result = "<br><br><head>JDBC & Driver Manager</head><body><br><br><H3>Liste des ADHERENTS</H3><br>";
 			result+="<ul>";
