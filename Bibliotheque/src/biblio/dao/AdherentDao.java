@@ -47,7 +47,7 @@ public class AdherentDao {
 			statement = cnx.createStatement();
 			cnx.setAutoCommit(true);
 			
-			int nbLignesImpactees = statement.executeUpdate("INSERT INTO UTILISATEUR(IDUTILISATEUR,NOM, PRENOM,PWD,PSEUDONYME,DATENAISSANCE,SEXE,CATEGORIEUTILISATEUR) VALUES (seq_utilisateur,"+adh.getNom()+","+"')");
+			int nbLignesImpactees = statement.executeUpdate("INSERT INTO UTILISATEUR(IDUTILISATEUR,NOM, PRENOM,PWD,PSEUDONYME,DATENAISSANCE,SEXE,CATEGORIEUTILISATEUR) VALUES (seq_utilisateur,"+adh.getNom()+","+adh.getPrenom()+","+adh.getpwd()+","+adh.getpseudonyme()+","+adh.getDateNaissance()+","+adh.getSexe()+","+adh.getCat()+","+"')");
 			
 			String result = "<br><br><head>JDBC & Driver Manager</head><body><br><br><H3>Liste des ADHERENTS</H3><br>";
 			result+="<ul>";
