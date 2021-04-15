@@ -67,18 +67,21 @@ public void doGet(HttpServletRequest request, HttpServletResponse response) thro
 		ad.setDatenaiss(request.getParameter("datenaiss"));
 		ad.setSexe(request.getParameter("sexe"));
 		ad.setCat("ADHERENT");
-		ad.setTel(request.getParameter("tel"));		
+		ad.setTel(request.getParameter("tel"));
+		
+		HttpSession session = request.getSession(true);
+		session.setAttribute("inscriptionformbean", ad);
 				
 		ad.validate();
 		
 		if(ad.isValid()) {
 			Adherent adh = new Adherent(200000, ad.getNom(), ad.getPrenom(), ad.getPwd(), ad.getPseudonyme(), ad.getDatenaiss(), ad.getSexe(), ad.getCat(), ad.getTel());
 			AdherentDao ado = new AdherentDao(driverName,url,usr,pwd);
-			HttpSession session = request.getSession(true);
+
 			session.setAttribute("resultat", ado.insertAdherent());			
 			request.getRequestDispatcher("/confirmInscription.jsp").forward(request, response);
 		}else {
-			HttpSession session = request.getSession(true);
+			
 			session.setAttribute("rerem", ad);			
 			request.getRequestDispatcher("/formulaireInscription.jsp").forward(request, response);
 		}

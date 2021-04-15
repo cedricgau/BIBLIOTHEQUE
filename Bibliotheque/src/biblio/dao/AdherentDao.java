@@ -6,6 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.servlet.http.HttpSession;
+
+import biblio.domain.Adherent;
+
 public class AdherentDao {
 	private String driverName="";
 	private String url="";
@@ -41,8 +45,10 @@ public class AdherentDao {
 		}
 		try { //Création d'un énoncé et exécution
 			statement = cnx.createStatement();
-			rs = statement.executeQuery("SELECT * FROM ADHERENT");
-
+			cnx.setAutoCommit(true);
+			
+			int nbLignesImpactees = statement.executeUpdate("INSERT INTO UTILISATEUR(IDUTILISATEUR,NOM, PRENOM,PWD,PSEUDONYME,DATENAISSANCE,SEXE,CATEGORIEUTILISATEUR) VALUES (seq_utilisateur"+"')");
+			
 			String result = "<br><br><head>JDBC & Driver Manager</head><body><br><br><H3>Liste des ADHERENTS</H3><br>";
 			result+="<ul>";
 			while (rs.next()) result += "<li>" + rs.getString(1) + "</li>";
