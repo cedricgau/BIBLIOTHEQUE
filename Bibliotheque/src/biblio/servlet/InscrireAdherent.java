@@ -15,6 +15,7 @@ import javax.servlet.http.*;
 
 import biblio.dao.AdherentDao;
 import biblio.domain.Adherent;
+import biblio.formbean.InscriptionFormBean;
 
 
 @SuppressWarnings("serial")
@@ -58,25 +59,27 @@ public void doGet(HttpServletRequest request, HttpServletResponse response) thro
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 		}
 	}else if (request.getParameter("page").equalsIgnoreCase("formulaireInscription")) {
-		Adherent ad = new Adherent();
+		InscriptionFormBean ad = new InscriptionFormBean();
 		ad.setNom(request.getParameter("nom"));
 		ad.setPrenom(request.getParameter("prenom"));
-		ad.setpwd(request.getParameter("pwd"));
-		ad.setpseudonyme(request.getParameter("pseudo"));
-		ad.setDateNaissance(request.getParameter("datenaiss"));
+		ad.setPwd(request.getParameter("pwd"));
+		ad.setPseudonyme(request.getParameter("pseudo"));
+		ad.setDatenaiss(request.getParameter("datenaiss"));
 		ad.setSexe(request.getParameter("sexe"));
 		ad.setCat("ADHERENT");
-		ad.setTelephone(request.getParameter("tel"));		
+		ad.setTel(request.getParameter("tel"));		
 				
 		ad.validate();
 		
 		if(ad.isValid()) {
+			Adherent adh = new Adherent(200000, ad.getNom(), ad.getPrenom(), ad.getPwd(), ad.getPseudonyme(), ad.getDatenaiss(), ad.getSexe(), ad.getCat(), ad.getTel());
 			AdherentDao ado = new AdherentDao(driverName,url,usr,pwd);
 			HttpSession session = request.getSession(true);
 			session.setAttribute("resultat", ado.insertAdherent());			
 			request.getRequestDispatcher("/confirmInscription.jsp").forward(request, response);
 		}else {
-			System.out.println("afficher les erreurs");
+			HttpSession session = request.getSession(true);
+			session.setAttribute("rerem", ad);			
 			request.getRequestDispatcher("/formulaireInscription.jsp").forward(request, response);
 		}
 	}else {
