@@ -98,15 +98,14 @@ public void validate() {
         	b=false;
         	if(b==false) errors.put("tel", "  le champs doit comporter uniquement des chiffres !!!");
         }
-        
-		for(Entry<String, String> o : errors.entrySet()) {
-			System.out.println("il y a : "+errors.size()+" erreurs. L'erreur : "+o.toString());
-		}	
+//        
+//		for(Entry<String, String> o : errors.entrySet()) {
+//			System.out.println("il y a : "+errors.size()+" erreurs. L'erreur : "+o.toString());
+//		}	
 	}
 	
 	public boolean isValid() {		
 		if (errors==null || errors.size()==0) return true;
-		getErrors().clear();
 		return false;
 	}
 
