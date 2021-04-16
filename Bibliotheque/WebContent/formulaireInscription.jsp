@@ -16,11 +16,10 @@
 
 <p>Nom :<input type="text" name="nom" value="gautier"></p>
 <p>Prenom :<input type="text" name="prenom" value="cedric"></p>
-<p>Mot de passe :<input type="text" name="pwd" value="cedric"></p>
-<p>Pseudonyme :<input type="text" name="pseudo" value="ced"></p>
+<p>Mot de passe :<input type="text" name="pwd" value="135"></p>
+<p>Pseudonyme :<input type="text" name="pseudo" value="grostoto"></p>
 <p>Date de naissance :<input type="text" name="datenaiss" value="1973-04-09"></p>
 <p>sexe : Masculin<input type="radio" name="sexe" value="masculin" checked>Féminin<input type="radio" name="sexe" value="feminin"></p>
-<p>Catégorie d'utilisateur :<input type="text" name="catutil"></p>
 <p>Téléphone :<input type="text" name="tel" value="0699446587"></p>
 <input type="hidden" name="page" value="formulaireInscription">
 <input type="submit" value="Ajouter">
